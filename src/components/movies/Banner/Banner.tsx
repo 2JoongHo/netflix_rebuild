@@ -1,38 +1,84 @@
+import { useEffect, useMemo, useState } from "react";
+import requests from "../../../api/requests";
+import tmdb from "../../../api/tmdb";
+import type { Movie } from "../../../types/movie";
 import styles from "./Banner.module.css";
 
 interface BannerItem {
     title: string;
     overview: string;
-    backdropUrl: string; // 배너 배경 이미지 URL
+    backdropUrl: string;
+}
+
+// 글이 너무 길 경우 ...으로 자르기
+function truncate(text: string, max = 120) {
+    return text.length > max ? text.slice(0, max - 1) + "..." : text;
 }
 
 export default function Banner() {
-    const item: BannerItem = {
-        title: "NETFILX ORIGINAL",
-        overview: "지금부터 UI를 만드는 단게야. 다음 단계에서 TMDB에서 랜덤으로 하나 골라서 배너를 채울꺼야.",
-        backdropUrl: "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=1600&q=80",
+    const [movie, setMovie] = useState<Movie | null>(null);
+
+    useEffect(() => {
+        const fetchBannerMovie = async () => {
+            const response = await tmdb.get<{results:Movie[]} > (
+                requests.fetchNetflixOriginals
+            );
+
+            const results = response.data.results;
+
+            if (!results || results.length === 0) return;
+
+            const random = results[Math.floor(Math.random() * results.length)];
+            setMovie(random);
+        };
+
+        fetchBannerMovie();
+    }, []);
+
+    const item: BannerItem | null = useMemo(() => {
+        if (!movie) return null;
+
+        const title = movie.title ?? movie.name ?? "Untitled";
+
+        const overview = movie.overview ?? "";
+
+        if (!movie.backdrop_path) return null;
+
+        const backdropUrl = `https://image.tmdb.org/t/p/originals${movie.backdrop_path}`;
+
+        return {
+            title,
+            overview: truncate(overview, 140),
+            backdropUrl,
+        };
+    }, [movie]);
+
+    if (!item) {
+        return (
+            <header className={styles.banner} style={{backgroundImage: "none"}}>
+                <div className={styles.content}>
+                    <h2 className={styles.title}>Loading...</h2>
+                    <p className={styles.desc}>배너 데이터를 불러오는 중</p>
+                </div>
+                <div className={styles.fadeBottom}/>
+            </header>
+        );
     }
 
     return (
         <header
             className={styles.banner}
-            style={{backgroundImage: `url(${item.backdropUrl})`}}    
+            style={{backgroundImage:`url${item.backdropUrl}`}}    
         >
             <div className={styles.content}>
-                <h2 className={styles.title}>
-                    {item.title}
-                </h2>
-
+                <h2 className={styles.title}>{item.title}</h2>
                 <div className={styles.buttons}>
                     <button className={`${styles.button} ${styles.play}`}>Play</button>
                     <button className={`${styles.button} ${styles.info}`}>More Info</button>
                 </div>
-
                 <p className={styles.desc}>{item.overview}</p>
             </div>
-
             <div className={styles.fadeBottom}/>
-
         </header>
     )
 }
