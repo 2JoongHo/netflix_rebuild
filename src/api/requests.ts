@@ -6,7 +6,10 @@ if (!API_KEY) {
 }
 
 const requests = {
-  fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213$language=ko-KR`,
+  fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213&language=ko-KR`,
+  fetchTrending: `/trending/all/week?api_key=${API_KEY}&language=ko-KR`,
+  fetchTopRated: `/movie/top_rated?api_key=${API_KEY}&language=ko-KR`,
+  fetchActionMovies: `/discover/movie?api_key=${API_KEY}&language=ko-KR`,
 };
 
 export default requests;

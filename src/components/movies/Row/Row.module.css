@@ -1,0 +1,27 @@
+.row {
+  padding: 16px 0;
+}
+
+.title {
+  margin: 0 0 10px 40px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.posters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 0 40px 10px 40px;
+}
+
+.poster {
+  width: 160px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.poster:hover {
+  transform: scale(1.06);
+}
