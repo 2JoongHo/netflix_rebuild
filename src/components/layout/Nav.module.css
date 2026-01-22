@@ -1,0 +1,12 @@
+.nav {
+    padding: 16px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.logo {
+    color: red;
+    margin: 0;
+}
