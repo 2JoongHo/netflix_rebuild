@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import requests from "../../../api/requests";
-import tmdb from "../../../api/tmdb";
-import type { Movie } from "../../../types/movie";
+import requests from "../api/requests";
+import tmdb from "../api/tmdb";
+import type { Movie } from "../types/movie";
 import styles from "./Banner.module.css";
 
 interface BannerItem {
@@ -10,18 +10,22 @@ interface BannerItem {
   backdropUrl: string;
 }
 
+interface BannerProps {
+  fetchUrl: string;
+}
+
 // 글이 너무 길 경우 ...으로 자르기
 function truncate(text: string, max = 120) {
   return text.length > max ? text.slice(0, max - 1) + "..." : text;
 }
 
-export default function Banner() {
+export default function Banner({fetchUrl} : BannerProps) {
   const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
     const fetchBannerMovie = async () => {
       const response = await tmdb.get<{ results: Movie[] }>(
-        requests.fetchNetflixOriginals,
+        requests.movie.fetchNetflixOriginals,
       );
 
       const results = response.data.results;
@@ -73,9 +77,9 @@ export default function Banner() {
       <div className={styles.content}>
         <h2 className={styles.title}>{item.title}</h2>
         <div className={styles.buttons}>
-          <button className={`${styles.button} ${styles.play}`}>Play</button>
+          <button className={`${styles.button} ${styles.play}`}>▶ Play</button>
           <button className={`${styles.button} ${styles.info}`}>
-            More Info
+          ⓘ More Information
           </button>
         </div>
         <p className={styles.desc}>{item.overview}</p>
