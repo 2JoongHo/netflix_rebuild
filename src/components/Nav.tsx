@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import styles from "./Nav.module.css";
 
 function Nav() {
@@ -30,7 +31,29 @@ function Nav() {
             background: isScrolled ? "black" : "transparent",        
             }}
         >
+            {/* 왼쪽 로고 */}
             <h1 className={styles.logo}>NETFLIX</h1>
+
+            {/* 오른쪽 탭 메뉴 */}
+            <div className={styles.menu}>
+                <NavLink
+                    to="/movies"
+                    className={({isActive}) =>
+                        `${styles.link} ${isActive ? styles.active: ""}`
+                    }
+                >
+                    영화
+                </NavLink>
+
+                <NavLink
+                    to="/tv"
+                    className={({isActive}) =>
+                        `${styles.link} ${isActive ? styles.active : ""}`
+                    }
+                >
+                    시리즈
+                </NavLink>
+            </div>
         </nav>
     )
 }

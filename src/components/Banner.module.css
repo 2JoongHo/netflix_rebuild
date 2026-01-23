@@ -1,9 +1,9 @@
 .banner {
     position: relative;
-    height: 55vh;
+    height: 75vh; /* 전체 화면의 75%로 조정 */
     min-height: 360px;
     background-size: cover;
-    background-position: center center;
+    background-position: center top; /*  배너 사진 가운데 위쪽으로 조정*/
     display: flex;
     align-items: flex-end;
 }
@@ -17,6 +17,7 @@
     margin: 0 0 12px 0;
     font-size: 48px;
     font-weight: 800;
+    color: white;
 }
 
 .desc {
@@ -24,6 +25,7 @@
     font-size: 14px;
     line-height: 1.5;
     opacity: 0.9;
+    color: white;
 }
 
 .buttons {

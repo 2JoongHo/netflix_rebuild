@@ -1,25 +1,33 @@
 import { useEffect, useState } from "react";
+import tmdb from "../api/tmdb";
+import type { Movie } from "../types/movie";
 import styles from "./Row.module.css";
-import tmdb from "../../../api/tmdb";
-import type { Movie } from "../../../types/movie";
 
 interface RowProps {
   title: string; // Row 제목
   fetchUrl: string; // TMDB 요청 주소
+  onSelectMovie: (movie: Movie) => void;
 }
 
-export default function Row({ title, fetchUrl }: RowProps) {
-  console.log("Row 렌더링:", title);
+export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchMovies = async () => {
-      console.log("fetchUrl:", fetchUrl);
-      const response = await tmdb.get<{ results: Movie[] }>(fetchUrl);
-      console.log("results length:", response.data.results?.length);
-      setMovies(response.data.results ?? []);
+      try {
+        const response = await tmdb.get<{results: Movie[] }> (fetchUrl);
+        if (isMounted) setMovies(response.data.results ?? []);
+      } catch (e) {
+        if (isMounted) setMovies([]);
+      }
     };
     fetchMovies();
+
+    return () => {
+      isMounted = false;
+    }
   }, [fetchUrl]);
 
   return (
@@ -35,6 +43,7 @@ export default function Row({ title, fetchUrl }: RowProps) {
               className={styles.poster}
               src={`https://image.tmdb.org/t/p/w300${m.poster_path}`}
               alt={m.title ?? m.name ?? "poster"}
+              onClick={() => onSelectMovie(m)}
             />
           ))}
       </div>
