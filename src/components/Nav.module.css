@@ -10,9 +10,8 @@
 }
 
 .logo {
-    color: red;
-    fontweight: 900;
-    margin: 0;
+    height: 24px;
+    cursor: pointer;
 }
 
 .menu {

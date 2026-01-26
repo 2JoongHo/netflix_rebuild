@@ -32,7 +32,12 @@ function Nav() {
             }}
         >
             {/* 왼쪽 로고 */}
-            <h1 className={styles.logo}>NETFLIX</h1>
+            <img
+                src="/Netflix_logo.svg"
+                alt="Netflix logo"
+                className={styles.logo}
+            />
+            {/* <h1 className={styles.logo}>NETFLIX</h1> */}
 
             {/* 오른쪽 탭 메뉴 */}
             <div className={styles.menu}>
