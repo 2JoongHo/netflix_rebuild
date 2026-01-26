@@ -1,3 +1,5 @@
+// 배너 페이지 컴포넌트
+
 import { useEffect, useMemo, useState } from "react";
 import requests from "../api/requests";
 import tmdb from "../api/tmdb";
@@ -19,7 +21,7 @@ function truncate(text: string, max = 120) {
   return text.length > max ? text.slice(0, max - 1) + "..." : text;
 }
 
-export default function Banner({fetchUrl} : BannerProps) {
+export default function Banner({ fetchUrl }: BannerProps) {
   const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export default function Banner({fetchUrl} : BannerProps) {
         <div className={styles.buttons}>
           <button className={`${styles.button} ${styles.play}`}>▶ Play</button>
           <button className={`${styles.button} ${styles.info}`}>
-          ⓘ More Information
+            ⓘ More Information
           </button>
         </div>
         <p className={styles.desc}>{item.overview}</p>

@@ -14,7 +14,8 @@
   display: flex;
   gap: 20px;
   overflow-x: auto;
-  padding: 0 40px 10px 40px;
+  overflow-y: visible;
+  padding: 40px;
 
   scroll-behavior: smooth;
 
@@ -23,6 +24,9 @@
 
   /* 스크롤바 숨기기 (엣지) */
   -ms-overflow-style: none;
+
+  touch-action: pan-y; /* 세로 스크롤은 페이지로 */
+  overscroll-behavior-x: contain; /* 가로 스크롤 튕김/체인 방지 */
 }
 
 /* 스크롤바 숨기기 (크롬, 사파리) */
@@ -34,12 +38,15 @@
   width: 300px;
   border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.25s ease;
   flex: 0 0 auto; /* 포스터 크기가 줄어들지 않게하기 */
+  transform-origin: center center;
 }
 
 .poster:hover {
-  transform: scale(1.06);
+  position: relative;
+  transform: scale(1.15);
+  z-index: 10;
 }
 
 .edgeLeft,
@@ -64,8 +71,8 @@
 
 /* 화살표 버튼 */
 .arrow {
-  font-size: 50px;
   position: absolute;
+
   top: 0;
   bottom: 0;
   width: 56px;
@@ -85,6 +92,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  font-size: 50px;
+  font-weight: 700;
 }
 
 .arrow:hover {
@@ -101,8 +111,7 @@
 }
 
 /* 넷플릭스처럼 Row에 마우스 올렸을때만 보이게 */
-.row:hover
-.arrow {
+.row:hover .arrow {
   opacity: 1;
 }
 
@@ -118,8 +127,7 @@
   transition: opacity 0.2s ease;
 }
 
-.row:hover
-.dots {
+.row:hover .dots {
   opacity: 1;
 }
 
