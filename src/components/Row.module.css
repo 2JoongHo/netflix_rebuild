@@ -1,4 +1,5 @@
 .row {
+  position: relative; /* 화살표, 도트 배치 기준 */
   padding: 16px 0;
 }
 
@@ -8,11 +9,25 @@
   font-weight: 700;
 }
 
+/* 스크롤 컨테이너 */
 .posters {
   display: flex;
   gap: 10px;
   overflow-x: auto;
   padding: 0 40px 10px 40px;
+
+  scroll-behavior: smooth;
+
+  /* 스트롤바 숨기기 (파이어폭스) */
+  scrollbar-width: none;
+
+  /* 스크롤바 숨기기 (엣지) */
+  -ms-overflow-style: none;
+}
+
+/* 스크롤바 숨기기 (크롬, 사파리) */
+.posters::-webkit-scrollbar {
+  display: none;
 }
 
 .poster {
@@ -20,8 +35,96 @@
   border-radius: 6px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  flex: 0 0 auto; /* 포스터 크기가 줄어들지 않게하기 */
 }
 
 .poster:hover {
   transform: scale(1.06);
+}
+
+.edgeLeft,
+.edgeRight {
+  position: absolute;
+  top: 44px;
+  bottom: 10px;
+  width: 60px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.edgeLeft {
+  left: 0;
+  background: linear-gradient(90deg, #111, transparent);
+}
+
+.edgeRight {
+  right: 0;
+  background: linear-gradient(270deg, #111, transparent);
+}
+
+/* 화살표 버튼 */
+.arrow {
+  font-size: 50px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 56px;
+
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  /* 화살표 가운데 정렬 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftArrow {
+  left: 0;
+}
+
+.rightArrow {
+  right: 0;
+}
+
+/* 넷플릭스처럼 Row에 마우스 올렸을때만 보이게 */
+.row:hover
+.arrow {
+  opacity: 1;
+}
+
+.dots {
+  position: absolute;
+  top: 6px;
+  right: 40px;
+  display: flex;
+  gap: 6px;
+  z-index: 4;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.row:hover
+.dots {
+  opacity: 1;
+}
+
+.dot {
+  width: 10px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.dotActive {
+  background: rgba(255, 255, 255, 0.95);
 }
