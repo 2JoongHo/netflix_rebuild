@@ -21,7 +21,6 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
   // 도트 인디케이터
   const [pageIndex, setPageIndex] = useState<number>(0);
 
-
   useEffect(() => {
     // 비동기 응답이 늦게 와도 안전하게 처리
     let isMounted = true;
