@@ -12,7 +12,7 @@
 /* 스크롤 컨테이너 */
 .posters {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   overflow-x: auto;
   padding: 0 40px 10px 40px;
 
@@ -31,7 +31,7 @@
 }
 
 .poster {
-  width: 160px;
+  width: 300px;
   border-radius: 6px;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -85,6 +85,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.arrow:hover {
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 60px;
 }
 
 .leftArrow {
