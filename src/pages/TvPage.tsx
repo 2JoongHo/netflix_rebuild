@@ -27,53 +27,53 @@ export default function TvPage() {
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="액션 영화"
-        fetchUrl={requests.tv.fetchActionMovies}
+        title="액션&어드벤처 시리즈"
+        fetchUrl={requests.tv.fetchActionSeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="공포 영화"
-        fetchUrl={requests.tv.fetchHorrorMovies}
+        title="애니메이션"
+        fetchUrl={requests.tv.fetchAnimationSeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="로맨스 영화"
-        fetchUrl={requests.tv.fetchRomanceMovies}
+        title="코미디"
+        fetchUrl={requests.tv.fetchComedySeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="만화 영화"
-        fetchUrl={requests.tv.fetchAnimationMovies}
+        title="다큐멘터리"
+        fetchUrl={requests.tv.fetchDocumentarySeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="SF 영화"
-        fetchUrl={requests.tv.fetchSFMovies}
+        title="드라마"
+        fetchUrl={requests.tv.fetchDramaSeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="판타지 영화"
-        fetchUrl={requests.tv.fetchFantasyMovies}
+        title="어린이 드라마"
+        fetchUrl={requests.tv.fetchKidSeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="스릴러 영화"
-        fetchUrl={requests.tv.fetchThrillerMovies}
+        title="미스테리쇼"
+        fetchUrl={requests.tv.fetchMysterySeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="미스테리 영화"
-        fetchUrl={requests.tv.fetchMysteryMovies}
+        title="리얼리티쇼"
+        fetchUrl={requests.tv.fetchRealitySeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="가족 영화"
-        fetchUrl={requests.tv.fetchFamilyMovies}
+        title="판타지 시리즈"
+        fetchUrl={requests.tv.fetchFantasySeries}
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="코미디 영화"
-        fetchUrl={requests.tv.fetchComedyMovies}
+        title="토크쇼"
+        fetchUrl={requests.tv.fetchTalkSeries}
         onSelectMovie={setSelectedMovie}
       />
 
