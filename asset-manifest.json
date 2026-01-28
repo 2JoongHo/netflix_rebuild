@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/netflix_rebuild/static/css/main.01929de1.css",
+    "main.js": "/netflix_rebuild/static/js/main.43261aef.js",
+    "index.html": "/netflix_rebuild/index.html",
+    "main.01929de1.css.map": "/netflix_rebuild/static/css/main.01929de1.css.map",
+    "main.43261aef.js.map": "/netflix_rebuild/static/js/main.43261aef.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01929de1.css",
+    "static/js/main.43261aef.js"
+  ]
+}
