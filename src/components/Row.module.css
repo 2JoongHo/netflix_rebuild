@@ -141,3 +141,44 @@
 .dotActive {
   background: rgba(255, 255, 255, 0.95);
 }
+
+@media (max-width: 768px) {
+  .poster {
+    width: 200px;
+  }
+  .posters {
+    gap: 14px;
+    padding: 16px 24px 26px;
+  }
+  .arrow {
+    width: 44px;
+    font-size: 40px;
+  }
+  .poster:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .poster {
+    width: 140px;
+  }
+  .posters {
+    gap: 10px;
+    padding: 14px 16px 24px;
+  }
+  .title {
+    margin-left: 16px;
+    font-size: 15px;
+  }
+  .arrow {
+    width: 36px;
+    font-size: 32px;
+  }
+  .dots {
+    right: 16px;
+  }
+  .poster:hover {
+    transform: none;
+  }  
+}

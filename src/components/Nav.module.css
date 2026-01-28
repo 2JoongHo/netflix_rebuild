@@ -85,3 +85,42 @@
     width: 30px;
     height: 30px;
 }
+
+@media (max-width: 768px) {
+    .nav {
+        /* 기존 16px 24px보다 작게 */
+        padding: 12px 14px;
+    }
+    .logo {
+        height: 20px;
+    }
+    .menu {
+        margin-left: 14px;
+        gap: 10px;
+    }
+    .link {
+        font-size: 13px;
+    }
+    .searchOpen {
+        width: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav {
+        padding: 10px 12px;
+    }
+    .logo {
+        height: 18px;
+    }
+    .menu {
+        margin-left: 10px;
+        gap: 8px;
+    }
+    .link {
+        font-size: 12px;
+    }
+    .searchOpen {
+        width: 150px;
+    }
+}

@@ -73,3 +73,31 @@
         #111
     );
 }
+
+@media (max-width: 768px) {
+    .banner {
+        height: 360px;
+    }
+    .contents {
+        padding: 96px 16px 24px;
+        max-width: none;
+    }
+    .title {
+        font-size: 1.8rem;
+    }
+    .description {
+        font-size: 0.9rem;
+        line-height: 1.34;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .buttons {
+        gap: 8px;
+    }
+    .buttons button {
+        padding: 8px 14px;
+        font-size: 14px;
+    }
+}
