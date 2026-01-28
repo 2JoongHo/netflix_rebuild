@@ -22,6 +22,9 @@ function Nav() {
   // 페이지 이동하기위함
   const navigate = useNavigate();
 
+  // 검색 영역용 ref
+  const searchWrapRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -41,6 +44,29 @@ function Nav() {
     if (isSearchOpen) {
       inputRef.current?.focus();
     }
+  }, [isSearchOpen]);
+
+  // 검색착 바깥 클릭 감지
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      // 검색창이 닫혔을 경우 처리할 필요 없음
+      if (!isSearchOpen) return;
+
+      const target = e.target as Node;
+      const wrap = searchWrapRef.current;
+
+      // wrap이 없거나, 클릭한 곳이 wrap 안이면 닫지 않음
+      if (!wrap || wrap.contains(target)) return;
+
+      // wrap 밖을 클릭했으면 닫기
+      setIsSearchOpen(false);
+    };
+
+    document.addEventListener("mousedown", onClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", onClickOutside);
+    };
   }, [isSearchOpen]);
 
   // 검색 실행(엔터)
@@ -89,7 +115,7 @@ function Nav() {
         </NavLink>
       </div>
 
-      <div className={styles.right}>
+      <div className={styles.right} ref={searchWrapRef}>
         {/* 돋보기 버튼: 누르면 검색창 토글 */}
         <button
           type="button"
