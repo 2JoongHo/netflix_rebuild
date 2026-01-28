@@ -1,3 +1,10 @@
+/* 반응형 기본: 패딩 때문에 화면 밖으로 튀어나가는 문제 방지 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -5,8 +12,16 @@ body {
   background: #111;
 }
 
+/* 앱 루트 */
 #root {
   min-height: 100%;
   background: #111;
   color: #fff;
+}
+
+/* 이미지가 컨테이너를 넘지 않게 */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
