@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import Netflix_logo from "../images/Netflix_logo.svg";
+import search_btn from "../images/search_btn.svg";
 import styles from "./Nav.module.css";
 
 function Nav() {
@@ -63,7 +65,7 @@ function Nav() {
       }}
     >
       {/* 왼쪽 로고 */}
-      <img src="/Netflix_logo.svg" alt="Netflix logo" className={styles.logo} />
+      <img src={Netflix_logo} alt="Netflix logo" className={styles.logo} />
       {/* <h1 className={styles.logo}>NETFLIX</h1> */}
 
       {/* 오른쪽 탭 메뉴 */}
@@ -95,7 +97,7 @@ function Nav() {
           onClick={() => setIsSearchOpen((prev) => !prev)}
           aria-label="검색"
         >
-          <img className={styles.searchIcon}src="/search_btn.svg" alt="검색 버튼"/>
+          <img className={styles.searchIcon} src={search_btn} alt="검색 버튼"/>
         </button>
 
         {/* 검색 폼: 열릴 때 width가 늘어나면서 input이 보이게 */}
