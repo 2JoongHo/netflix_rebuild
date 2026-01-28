@@ -1,19 +1,28 @@
 // 네비게이션 바 컴포넌트
 
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Nav.module.css";
 
 function Nav() {
+  // 스크롤 상태: 스크롤이 내려가면 true
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+  // 검색 UI 상태: 검색창이 열려있는지
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+
+  // 검색 입력값
+  const [query, setQuery] = useState<string>("");
+
+  // 검색창이 열릴 때 input에 자동 포커스를 주기위한 ref
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // 페이지 이동하기위함
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
 
     // "scroll"이 발생할 때마다 onScroll 함수를 실행하기
@@ -24,6 +33,27 @@ function Nav() {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  // 검색창이 열릴 경우 input에 자동 포커스
+  useEffect(() => {
+    if (isSearchOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isSearchOpen]);
+
+  // 검색 실행(엔터)
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const trimmed = query.trim();
+    if (!trimmed) return;
+
+    navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+
+    // 검색 후 닫고 비우기
+    setIsSearchOpen(false);
+    setQuery('');
+  };
 
   return (
     <nav
@@ -55,6 +85,32 @@ function Nav() {
         >
           시리즈
         </NavLink>
+      </div>
+
+      <div className={styles.right}>
+        {/* 돋보기 버튼: 누르면 검색창 토글 */}
+        <button
+          type="button"
+          className={styles.searchBtn}
+          onClick={() => setIsSearchOpen((prev) => !prev)}
+          aria-label="검색"
+        >
+          <img className={styles.searchIcon}src="/search_btn.svg" alt="검색 버튼"/>
+        </button>
+
+        {/* 검색 폼: 열릴 때 width가 늘어나면서 input이 보이게 */}
+        <form
+          className={`${styles.searchForm} ${isSearchOpen ? styles.searchOpen : ""}`}
+          onSubmit={handleSubmit}
+        >
+          <input
+            ref={inputRef}
+            className={styles.searchInput}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="제목으로 검색"
+          />
+        </form>
       </div>
     </nav>
   );

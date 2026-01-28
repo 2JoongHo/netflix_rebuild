@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { default as MoviesPage, default as TvPage } from "./pages/TvPage";
+import { default as MoviesPage } from "./pages/MoviesPage";
+import TvPage from "./pages/TvPage";
 
 export default function App() {
   return (

@@ -36,7 +36,7 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
 
   const posters = useMemo(() => movies.filter((m) => m.poster_path), [movies]);
 
-  // ✅ 페이지 수 재계산 (maxScrollLeft 기준 = 마지막 페이지 계산이 더 정확)
+  // 페이지 수 재계산 (maxScrollLeft 기준 = 마지막 페이지 계산이 더 정확)
   const recalcPages = () => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -61,7 +61,7 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
     return () => window.removeEventListener("resize", recalcPages);
   }, [posters.length]);
 
-  // ✅ 스크롤 위치 -> pageIndex 계산 (ratio 방식)
+  // 스크롤 위치 -> pageIndex 계산 (ratio 방식)
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -87,10 +87,10 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
     return () => {
       el.removeEventListener("scroll", onScroll);
     };
-    // 🔥 totalPages를 의존성에 포함해야 최신 값으로 계산됨
+    // totalPages를 의존성에 포함해야 최신 값으로 계산됨
   }, [posters.length, totalPages]);
 
-  // ✅ 루프 판정은 pageIndex가 아니라 "진짜 스크롤 위치"로 한다
+  // 루프 판정은 pageIndex가 아니라 현재 스크롤 위치
   const scrollByPage = (direction: "left" | "right") => {
     const el = scrollerRef.current;
     if (!el) return;

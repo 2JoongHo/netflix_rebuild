@@ -7,6 +7,7 @@
     display: flex;
     align-items: center;
     transition: background-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .logo {
@@ -25,4 +26,62 @@
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
+}
+
+/* 검색착 */
+/* 오른쪽 끝으로 보내는 영역 */
+.right {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* 돋보기 버튼 */
+.searchBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.searchBtn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* 검색창 컨테이너 */
+.searchForm {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.2s ease;
+    flex-shrink: 0;
+}
+
+/* 열렸을때의 폭 */
+.searchOpen {
+    width: 220px;
+}
+
+/* 실제 입력창 */
+.searchInput {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba( 255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.searchIcon {
+    display: block;
+    width: 30px;
+    height: 30px;
 }
