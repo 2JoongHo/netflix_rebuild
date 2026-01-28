@@ -42,7 +42,7 @@ export default function MoviesPage() {
         onSelectMovie={setSelectedMovie}
       />
       <Row
-        title="만화 영화"
+        title="애니메이션"
         fetchUrl={requests.movie.fetchAnimationMovies}
         onSelectMovie={setSelectedMovie}
       />
