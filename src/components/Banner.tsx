@@ -79,9 +79,9 @@ export default function Banner({ fetchUrl }: BannerProps) {
       <div className={styles.content}>
         <h2 className={styles.title}>{item.title}</h2>
         <div className={styles.buttons}>
-          <button className={`${styles.button} ${styles.play}`}>▶ Play</button>
+          <button className={`${styles.button} ${styles.play}`}>▶ 재생</button>
           <button className={`${styles.button} ${styles.info}`}>
-            ⓘ More Information
+            ⓘ 상세 정보
           </button>
         </div>
         <p className={styles.desc}>{item.overview}</p>
