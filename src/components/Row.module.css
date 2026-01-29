@@ -18,7 +18,6 @@
   display: flex;
   gap: 6px;
   z-index: 6;
-
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -55,23 +54,17 @@
 .posters {
   display: flex;
   gap: 20px;
-
   /* 핵심: viewport 높이에 딱 맞춤 (hover 전 높이 기준) */
   height: 100%;
-
   overflow-x: auto;
   overflow-y: visible; /* hover로 커져도 위/아래로 튀어나오게 */
-
   /* 기존 padding 40px 유지 */
   padding: 0 40px;
-
   scroll-behavior: smooth;
-
   /* 스크롤바 숨기기 (파이어폭스) */
   scrollbar-width: none;
   /* 스크롤바 숨기기 (엣지) */
   -ms-overflow-style: none;
-
   touch-action: pan-y; /* 세로 스크롤은 페이지로 */
   overscroll-behavior-x: contain; /* 가로 스크롤 튕김/체인 방지 */
 }
@@ -126,7 +119,7 @@
   transform: translateY(-50%);
   /* 핵심: 높이를 viewport에 고정 */
   height: 100%;
-  width: 56px;
+  width: 40px;
   border: 0;
   border-radius: 6px;
   cursor: pointer;
