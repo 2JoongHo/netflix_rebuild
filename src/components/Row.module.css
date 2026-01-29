@@ -1,6 +1,7 @@
 .row {
-  position: relative; /* 화살표, 도트 배치 기준 */
+  position: relative; /* 도트 배치 기준 */
   padding: 16px 0;
+  --posterH: 300px;
 }
 
 .title {
@@ -9,19 +10,65 @@
   font-weight: 700;
 }
 
+/* 도트는 기존대로 */
+.dots {
+  position: absolute;
+  top: 6px;
+  right: 40px;
+  display: flex;
+  gap: 6px;
+  z-index: 6;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.row:hover .dots {
+  opacity: 1;
+}
+
+.dot {
+  width: 10px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.dotActive {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* carousel은 큰 래퍼 (필요시 여백 잡는 용도) */
+.carousel {
+  position: relative;
+  padding: 0;
+}
+
+/* viewport: arrow/edge가 "포스터 기본 높이"만큼만 보이도록 기준을 만드는 영역 */
+.viewport {
+  position: relative;
+  height: var(--posterH);
+  margin: 40px 0;
+}
+
 /* 스크롤 컨테이너 */
 .posters {
   display: flex;
   gap: 20px;
+
+  /* 핵심: viewport 높이에 딱 맞춤 (hover 전 높이 기준) */
+  height: 100%;
+
   overflow-x: auto;
-  overflow-y: visible;
-  padding: 40px;
+  overflow-y: visible; /* hover로 커져도 위/아래로 튀어나오게 */
+
+  /* 기존 padding 40px 유지 */
+  padding: 0 40px;
 
   scroll-behavior: smooth;
 
-  /* 스트롤바 숨기기 (파이어폭스) */
+  /* 스크롤바 숨기기 (파이어폭스) */
   scrollbar-width: none;
-
   /* 스크롤바 숨기기 (엣지) */
   -ms-overflow-style: none;
 
@@ -36,6 +83,8 @@
 
 .poster {
   width: 300px;
+  height: 100%;
+  object-fit: cover;
   border-radius: 6px;
   cursor: pointer;
   transition: transform 0.25s ease;
@@ -49,11 +98,12 @@
   z-index: 10;
 }
 
+/* edge는 viewport 높이만큼만 */
 .edgeLeft,
 .edgeRight {
   position: absolute;
-  top: 44px;
-  bottom: 10px;
+  top: 0;
+  bottom: 0;
   width: 60px;
   pointer-events: none;
   z-index: 2;
@@ -69,30 +119,25 @@
   background: linear-gradient(270deg, #111, transparent);
 }
 
-/* 화살표 버튼 */
+/* 화살표 버튼: viewport(포스터 기본 높이)에만 딱 맞게 */
 .arrow {
   position: absolute;
-
-  top: 0;
-  bottom: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  /* 핵심: 높이를 viewport에 고정 */
+  height: 100%;
   width: 56px;
-
   border: 0;
   border-radius: 6px;
   cursor: pointer;
-
   background: rgba(0, 0, 0, 0.55);
   color: #fff;
-
-  z-index: 3;
+  z-index: 5; /* 포스터 hover(z-index:10)보다 낮게, edge(2)보다 높게 */
   opacity: 0;
   transition: opacity 0.2s ease;
-
-  /* 화살표 가운데 정렬 */
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 50px;
   font-weight: 700;
 }
@@ -115,47 +160,36 @@
   opacity: 1;
 }
 
-.dots {
-  position: absolute;
-  top: 6px;
-  right: 40px;
-  display: flex;
-  gap: 6px;
-  z-index: 4;
-
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.row:hover .dots {
-  opacity: 1;
-}
-
-.dot {
-  width: 10px;
-  height: 2px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.dotActive {
-  background: rgba(255, 255, 255, 0.95);
-}
-
 @media (max-width: 768px) {
   .poster {
     width: 200px;
   }
+
+  .row {
+    --posterH: 200px; /* 모바일에서 포스터 크기 줄어드니 높이도 같이 조절 */
+  }
+
   .posters {
     gap: 14px;
-    padding: 16px 24px 26px;
+    padding: 0 24px; /* 기존 느낌 유지 */
   }
+
+  /* 모바일/태블릿은 화살표 숨김 */
   .arrow {
-    width: 44px;
-    font-size: 40px;
+    display: none;
   }
+
   .poster:hover {
     transform: none;
+  }
+
+  .edgeLeft,
+  .edgeRight {
+    display: none;
+  }
+
+  .viewport {
+    margin: 16px 0; /* 모바일 여백 줄이기 */
   }
 }
 
@@ -163,22 +197,39 @@
   .poster {
     width: 140px;
   }
+
+  .row {
+    --posterH: 140px; /* 더 작아지니까 높이도 같이 */
+  }
+
   .posters {
     gap: 10px;
-    padding: 14px 16px 24px;
+    padding: 0 16px;
   }
+
   .title {
     margin-left: 16px;
     font-size: 15px;
   }
+
   .arrow {
-    width: 36px;
-    font-size: 32px;
+    display: none;
   }
+
   .dots {
     right: 16px;
   }
+
   .poster:hover {
     transform: none;
-  }  
+  }
+
+  .edgeLeft,
+  .edgeRight {
+    display: none;
+  }
+
+  .viewport {
+    margin: 14px 0;
+  }
 }

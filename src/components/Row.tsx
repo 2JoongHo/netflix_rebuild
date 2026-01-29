@@ -87,7 +87,6 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
     return () => {
       el.removeEventListener("scroll", onScroll);
     };
-    // totalPages를 의존성에 포함해야 최신 값으로 계산됨
   }, [posters.length, totalPages]);
 
   // 루프 판정은 pageIndex가 아니라 현재 스크롤 위치
@@ -136,37 +135,42 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
       </div>
 
       <div className={styles.carousel}>
-        <div className={styles.edgeLeft} />
-        <div className={styles.edgeRight} />
+        {/* viewport: "hover 되기 전 포스터 높이"를 기준으로 만드는 영역
+            arrow/edge의 높이는 viewport에 맞춰 고정되고,
+            포스터 hover는 overflow-y: visible로 위아래로만 튀어나오게 됨 */}
+        <div className={styles.viewport}>
+          <div className={styles.edgeLeft} />
+          <div className={styles.edgeRight} />
 
-        <button
-          className={`${styles.arrow} ${styles.leftArrow}`}
-          onClick={() => scrollByPage("left")}
-          aria-label="scroll left"
-        >
-          ‹
-        </button>
+          <button
+            className={`${styles.arrow} ${styles.leftArrow}`}
+            onClick={() => scrollByPage("left")}
+            aria-label="scroll left"
+          >
+            ‹
+          </button>
 
-        <button
-          className={`${styles.arrow} ${styles.rightArrow}`}
-          onClick={() => scrollByPage("right")}
-          aria-label="scroll right"
-        >
-          ›
-        </button>
+          <button
+            className={`${styles.arrow} ${styles.rightArrow}`}
+            onClick={() => scrollByPage("right")}
+            aria-label="scroll right"
+          >
+            ›
+          </button>
 
-        <div className={styles.posters} ref={scrollerRef}>
-          {posters.map((m) => (
-            <img
-              key={m.id}
-              className={styles.poster}
-              src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
-              alt={m.title ?? m.name ?? "poster"}
-              onClick={() => onSelectMovie(m)}
-              loading="lazy"
-              decoding="async"
-            />
-          ))}
+          <div className={styles.posters} ref={scrollerRef}>
+            {posters.map((m) => (
+              <img
+                key={m.id}
+                className={styles.poster}
+                src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
+                alt={m.title ?? m.name ?? "poster"}
+                onClick={() => onSelectMovie(m)}
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
