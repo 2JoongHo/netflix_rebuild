@@ -14,7 +14,10 @@ export default function TvPage() {
   return (
     <div style={{ paddingTop: 64 }}>
       <Nav />
-      <Banner fetchUrl={requests.tv.fetchTrending} />
+      <Banner
+        fetchUrl={requests.tv.fetchTrending}
+        onSelectMovie={setSelectedMovie}
+      />
 
       <Row
         title="지금 뜨는 콘텐츠"

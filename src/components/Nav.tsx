@@ -91,7 +91,12 @@ function Nav() {
       }}
     >
       {/* 왼쪽 로고 */}
-      <img src={Netflix_logo} alt="Netflix logo" className={styles.logo} />
+      <img
+        src={Netflix_logo}
+        alt="Netflix logo"
+        className={styles.logo}
+        onClick={() => navigate("/")}  
+      />
       {/* <h1 className={styles.logo}>NETFLIX</h1> */}
 
       {/* 오른쪽 탭 메뉴 */}

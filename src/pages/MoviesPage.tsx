@@ -14,7 +14,10 @@ export default function MoviesPage() {
   return (
     <div style={{ paddingTop: 64 }}>
       <Nav />
-      <Banner fetchUrl={requests.movie.fetchTrending} />
+      <Banner
+        fetchUrl={requests.movie.fetchTrending}
+        onSelectMovie={setSelectedMovie}
+      />
 
       <Row
         title="지금 뜨는 콘텐츠"
