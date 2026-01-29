@@ -36,6 +36,7 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
 
   const posters = useMemo(() => movies.filter((m) => m.poster_path), [movies]);
 
+  // 페이지 수 재계산 (maxScrollLeft 기준 = 마지막 페이지 계산이 더 정확)
   const recalcPages = () => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -47,6 +48,8 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
       maxScrollLeft <= 0 ? 1 : Math.ceil(maxScrollLeft / pageWidth) + 1;
 
     setTotalPages(pages);
+
+    // 페이지 수가 줄어드는 순간 pageIndex가 범위를 벗어나면 보정
     setPageIndex((prev) => Math.max(0, Math.min(pages - 1, prev)));
   };
 
@@ -58,6 +61,7 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
     return () => window.removeEventListener("resize", recalcPages);
   }, [posters.length]);
 
+  // 스크롤 위치 -> pageIndex 계산 (ratio 방식)
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -76,6 +80,8 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
     };
 
     el.addEventListener("scroll", onScroll, { passive: true });
+
+    // 초기 동기화
     onScroll();
 
     return () => {
@@ -83,6 +89,7 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
     };
   }, [posters.length, totalPages]);
 
+  // 루프 판정은 pageIndex가 아니라 현재 스크롤 위치
   const scrollByPage = (direction: "left" | "right") => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -90,12 +97,14 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
     const pageWidth = el.clientWidth;
     const maxScrollLeft = el.scrollWidth - el.clientWidth;
 
+    // 스크롤 위치가 아주 근접했을 때도 끝으로 인정 (오차 보정)
     const EPS = 2;
     const atStart = el.scrollLeft <= EPS;
     const atEnd = el.scrollLeft >= maxScrollLeft - EPS;
 
     if (direction === "right") {
       if (atEnd) {
+        // 맨 끝에서 -> 맨 앞으로
         el.scrollTo({ left: 0, behavior: "smooth" });
         return;
       }
@@ -103,7 +112,9 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
       return;
     }
 
+    // left
     if (atStart) {
+      // 맨 앞에서 -> 맨 끝으로
       el.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
       return;
     }
@@ -124,7 +135,9 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
       </div>
 
       <div className={styles.carousel}>
-        {/* viewport: 화살표/그라데이션 기준 영역 */}
+        {/* viewport: "hover 되기 전 포스터 높이"를 기준으로 만드는 영역
+            arrow/edge의 높이는 viewport에 맞춰 고정되고,
+            포스터 hover는 overflow-y: visible로 위아래로만 튀어나오게 됨 */}
         <div className={styles.viewport}>
           <div className={styles.edgeLeft} />
           <div className={styles.edgeRight} />
@@ -145,22 +158,18 @@ export default function Row({ title, fetchUrl, onSelectMovie }: RowProps) {
             ›
           </button>
 
-          {/* 스크롤은 scroller가 담당 (ref도 여기로) */}
-          <div className={styles.scroller} ref={scrollerRef}>
-            {/* 포스터 트랙(hover 확대가 보여야 하니까 overflow는 visible 성격) */}
-            <div className={styles.posters}>
-              {posters.map((m) => (
-                <img
-                  key={m.id}
-                  className={styles.poster}
-                  src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
-                  alt={m.title ?? m.name ?? "poster"}
-                  onClick={() => onSelectMovie(m)}
-                  loading="lazy"
-                  decoding="async"
-                />
-              ))}
-            </div>
+          <div className={styles.posters} ref={scrollerRef}>
+            {posters.map((m) => (
+              <img
+                key={m.id}
+                className={styles.poster}
+                src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
+                alt={m.title ?? m.name ?? "poster"}
+                onClick={() => onSelectMovie(m)}
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
           </div>
         </div>
       </div>
