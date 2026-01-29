@@ -1,7 +1,6 @@
 // 배너 페이지 컴포넌트
 
 import { useEffect, useMemo, useState } from "react";
-import requests from "../api/requests";
 import tmdb from "../api/tmdb";
 import type { Movie } from "../types/movie";
 import styles from "./Banner.module.css";
@@ -14,6 +13,7 @@ interface BannerItem {
 
 interface BannerProps {
   fetchUrl: string;
+  onSelectMovie?: (movie: Movie) => void;
 }
 
 // 글이 너무 길 경우 ...으로 자르기
@@ -21,13 +21,14 @@ function truncate(text: string, max = 120) {
   return text.length > max ? text.slice(0, max - 1) + "..." : text;
 }
 
-export default function Banner({ fetchUrl }: BannerProps) {
+export default function Banner({ fetchUrl, onSelectMovie }: BannerProps) {
   const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
     const fetchBannerMovie = async () => {
       const response = await tmdb.get<{ results: Movie[] }>(
-        requests.movie.fetchNetflixOriginals,
+        fetchUrl
+        // requests.movie.fetchNetflixOriginals,
       );
 
       const results = response.data.results;
@@ -39,7 +40,7 @@ export default function Banner({ fetchUrl }: BannerProps) {
       setMovie(random);
     };
     fetchBannerMovie();
-  }, []);
+  }, [fetchUrl]);
 
   const item: BannerItem | null = useMemo(() => {
     if (!movie) return null;
@@ -58,6 +59,12 @@ export default function Banner({ fetchUrl }: BannerProps) {
       backdropUrl,
     };
   }, [movie]);
+
+  // 상세정보 클릭 핸들러
+  const handleOpenDetail = () => {
+    if(!movie) return;
+    onSelectMovie?.(movie);
+  }
 
   if (!item) {
     return (
@@ -80,7 +87,10 @@ export default function Banner({ fetchUrl }: BannerProps) {
         <h2 className={styles.title}>{item.title}</h2>
         <div className={styles.buttons}>
           <button className={`${styles.button} ${styles.play}`}>▶ 재생</button>
-          <button className={`${styles.button} ${styles.info}`}>
+          <button 
+            className={`${styles.button} ${styles.info}`}
+            onClick={handleOpenDetail}
+          >
             ⓘ 상세 정보
           </button>
         </div>
