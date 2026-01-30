@@ -2,6 +2,7 @@
 
 import { Movie } from "../../types/movie";
 import styles from "./MovieModal.module.css";
+import close_btn from "../../images/x_btn.svg";
 
 interface MovieModalProps {
   movie: Movie;
@@ -26,7 +27,7 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
           }}
         >
           <button className={styles.close} onClick={onClose}>
-            X
+            <img className={styles.close_btn} src={close_btn} alt="Close" />
           </button>
         </div>
 
