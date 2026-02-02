@@ -1,0 +1,47 @@
+/* 전체 오버레이 */
+.overlay {
+    position: fixed;
+    display: flex;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+}
+
+/* 영상 컨테이너 */
+.modal {
+    position: relative;
+    width: 90vw;
+    max-width: 1200px;
+    aspect-ratio: 16 / 9;
+    background-color: black;
+}
+
+/* 닫기 버튼 */
+.close {
+    position: absolute;
+    top: -42px;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* 로딩, 트레일러 없을 때 */
+.fallback {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    color: white;
+    font-size: 16px;
+}
