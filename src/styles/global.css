@@ -10,6 +10,8 @@ body {
   height: 100%;
   margin: 0;
   background: #111;
+  /* 전체 화면 가로 흔들림(좌우 스크롤) 방지 */
+  overflow-x: hidden;
 }
 
 /* 앱 루트 */
@@ -17,6 +19,8 @@ body {
   min-height: 100%;
   background: #111;
   color: #fff;
+  /* 일부 브라우저에서 root가 삐져나오는 케이스도 방지 */
+  overflow-x: hidden;
 }
 
 /* 이미지가 컨테이너를 넘지 않게 */

@@ -40,7 +40,7 @@
   /* 스크롤바 숨기기 (엣지) */
   -ms-overflow-style: none;
 
-  touch-action: pan-y;
+  /* touch-action: pan-y; */
   overscroll-behavior-x: contain;
 }
 
@@ -171,6 +171,7 @@
 
   .posters {
     gap: 14px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .scroller {
@@ -200,6 +201,7 @@
 
   .posters {
     gap: 10px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .scroller {
