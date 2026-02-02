@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import tmdb from "../api/tmdb";
 import type { Movie } from "../types/movie";
 import styles from "./Banner.module.css";
+import VideoModal from "./VideoModal/VideoModal";
 
 interface BannerItem {
   title: string;
@@ -23,6 +24,15 @@ function truncate(text: string, max = 120) {
 
 export default function Banner({ fetchUrl, onSelectMovie }: BannerProps) {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [openVideo, setOpenVideo] = useState(false);
+
+  const mediaType = (movie?.media_type as "movie" | "tv") ?? "movie";
+
+  const handlePlay = () => {
+    if (!movie) return;
+    setOpenVideo(true);
+  }
+
 
   useEffect(() => {
     const fetchBannerMovie = async () => {
@@ -79,24 +89,38 @@ export default function Banner({ fetchUrl, onSelectMovie }: BannerProps) {
   }
 
   return (
-    <header
-      className={styles.banner}
-      style={{ backgroundImage: `url(${item.backdropUrl})` }}
-    >
-      <div className={styles.content}>
-        <h2 className={styles.title}>{item.title}</h2>
-        <div className={styles.buttons}>
-          <button className={`${styles.button} ${styles.play}`}>▶ 재생</button>
-          <button 
-            className={`${styles.button} ${styles.info}`}
-            onClick={handleOpenDetail}
-          >
-            ⓘ 상세 정보
-          </button>
+    <>
+      <header
+        className={styles.banner}
+        style={{ backgroundImage: `url(${item.backdropUrl})` }}
+      >
+        <div className={styles.content}>
+          <h2 className={styles.title}>{item.title}</h2>
+          <div className={styles.buttons}>
+            <button
+              className={`${styles.button} ${styles.play}`}
+              onClick={handlePlay}
+            >
+              ▶ 재생</button>
+            <button 
+              className={`${styles.button} ${styles.info}`}
+              onClick={handleOpenDetail}
+            >
+              ⓘ 상세 정보
+            </button>
+          </div>
+          <p className={styles.desc}>{item.overview}</p>
         </div>
-        <p className={styles.desc}>{item.overview}</p>
-      </div>
-      <div className={styles.fadeBottom} />
-    </header>
+        <div className={styles.fadeBottom} />
+      </header>
+
+      {openVideo && movie && (
+        <VideoModal
+          id={movie.id}
+          mediaType={mediaType}
+          onClose={() => setOpenVideo(false)}
+        />
+      )}
+    </>
   );
 }
