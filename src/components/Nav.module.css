@@ -1,6 +1,6 @@
 .nav {
   position: fixed;
-  padding: 16px 70px;
+  padding: 16px 40px;
   top: 0;
   width: 100%;
   z-index: 1000;
@@ -8,6 +8,7 @@
   align-items: center;
   transition: background-color 0.3s ease;
   box-sizing: border-box;
+  background: transparent;
 }
 
 .logo {

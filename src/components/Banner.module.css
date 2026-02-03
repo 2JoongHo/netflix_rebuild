@@ -102,6 +102,9 @@
 }
 
 @media (max-width: 480px) {
+  .banner {
+    height: 85vh;
+  }
   /* 콘텐츠 영역 위치 조정 */
   .content {
     width: 100%;
