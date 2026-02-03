@@ -26,16 +26,25 @@ function Nav() {
   const searchWrapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    console.log("Nav mounted");
+  
     const onScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const y =
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+  
+      // console.log("scroll y:", y);
+      setIsScrolled(y > 50);
     };
-
-    // "scroll"이 발생할 때마다 onScroll 함수를 실행하기
-    window.addEventListener("scroll", onScroll);
-
-    // Nav 컴포넌트가 사라질 때 이벤트 제거
+  
+    // capture로 어떤 스크롤이든 다 잡음
+    document.addEventListener("scroll", onScroll, true);
+  
+    // 초기 상태 반영
+    onScroll();
+  
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, true);
     };
   }, []);
 
