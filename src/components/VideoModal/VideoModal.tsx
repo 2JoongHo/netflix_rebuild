@@ -48,13 +48,13 @@ export default function VideoModal({
 
         if (!alive) return;
         setVideoKey(picked?.key ?? null);
-      } catch (e) {
-        if (!alive) return;
-        setVideoKey(null);
-      } finally {
-        if (!alive) return;
-        setLoading(false);
-      }
+        } catch (e) {
+          if (!alive) return;
+          setVideoKey(null);
+        } finally {
+          if (!alive) return;
+          setLoading(false);
+        }
     }
     fetchTrailer();
 
